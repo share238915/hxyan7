@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>欢迎您参加王先生和尼小姐的婚礼</title>
+    <link rel="stylesheet" href="css/index.css">
+    <style>
+        /*私有前缀*/
+        /*-webkit- , -moz- , -ms-, -o-*/
+        .heart{position: relative;width: 73px;height: 73px;top:73px;  left:73px;/*-webkit-transform: rotate(45deg);*/  }
+        .heart>span{display: block;width: 73px;height: 73px;background: red;position: absolute}
+        .heart>span:nth-child(2){top:-50%;left: 0;border-radius: 50%;}
+        .heart>span:last-child{top:0;left: -50%;border-radius: 50%;}
+        @-webkit-keyframes heartBeat {
+            0%{transform: scale(1.0)  rotate(0deg)}
+            40%{transform: scale(1.2)  rotate(45deg)}
+            60%{transform: scale(1.0)  rotate(0deg)}
+            100%{transform: scale(1.2) rotate(45deg);}
+        }
+        /*第二页有current开关类的时候，给.heart元素添加动画效果*/
+        #fullpage>section:nth-child(2).current>div>.heart{animation:heartBeat 2s infinite;}
+    </style>
+</head>
+<body>
+<div id="music" class="play"></div>
+<audio src="music/xzq.mp3" id="bgm" autoplay loop></audio>
+<div id="fullpage">
+    <section class="section">
+        <!--第一页-->
+        <span></span>
+        <span></span>
+        <span></span>
+    </section>
+    <section class="section">
+        <!--心-->
+        <div class="heart">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!--文字-->
+        <div class="p2_text">
+            <h1></h1>
+            <h1></h1>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+    <section class="section"></section>
+    <section class="section"></section>
+    <section class="section"></section>
+</div>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/jquery.fullPage.min.js"></script>
+<script>
+    $('#fullpage').fullpage({
+        css3: true,
+        afterLoad: function (anchorLink, index) {
+            $('.section').removeClass('current');
+            setTimeout(function () {
+                $('.section').eq(index - 1).addClass('current');
+            }, 100);
+        }
+    });
+</script>
+<script>
+    var music = document.getElementById('music');
+    var bgm = document.getElementById('bgm');
+    music.onclick = function(){
+        if(music.classList.contains('play')){
+            music.classList.remove('play');
+            bgm.pause();
+        }else{
+            music.classList.add('play');
+            bgm.play()
+        }
+    }
+</script>
+</body>
+</html>
